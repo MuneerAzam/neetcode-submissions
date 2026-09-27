@@ -11,18 +11,23 @@ class Solution:
     def copyRandomList(self, head: 'Optional[Node]') -> 'Optional[Node]':
         if not head:
             return None
-
-        copies = {}
-
         curr = head
         while curr:
-            copies[curr] = Node(curr.val)
-            curr = curr.next
-
+            new = Node(curr.val)
+            new.next = curr.next
+            curr.next = new
+            curr = new.next
+        neo = head.next
         curr = head
         while curr:
-            copies[curr].next = copies.get(curr.next)
-            copies[curr].random = copies.get(curr.random)
+            if curr.random:
+                curr.next.random = curr.random.next
+            curr = curr.next.next
+        curr = head
+        while curr:
+            copy = curr.next
+            curr.next = copy.next
+            if copy.next:
+                copy.next = copy.next.next
             curr = curr.next
-
-        return copies[head]
+        return neo
