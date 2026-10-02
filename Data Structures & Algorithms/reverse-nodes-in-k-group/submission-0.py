@@ -18,7 +18,6 @@ class Solution:
                 curr=curr.next
                 ans=ans.next
                 t=k-2
-                r=ans
                 while t>=0:
                     ans.next=l[t]
                     ans=ans.next
