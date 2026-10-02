@@ -3,24 +3,28 @@
 #     def __init__(self, val=0, next=None):
 #         self.val = val
 #         self.next = next
+
 class Solution:
     def reverseKGroup(self, head: Optional[ListNode], k: int) -> Optional[ListNode]:
-        dummy = ListNode(0, head)
-        group_prev = dummy
-        while True:
-            kth = group_prev
-            for _ in range(k):
-                kth = kth.next
-                if kth is None:
-                    return dummy.next
-            group_next = kth.next
-            prev = group_next
-            curr = group_prev.next
-            while curr != group_next:
-                temp = curr.next
-                curr.next = prev
-                prev = curr
-                curr = temp
-            temp = group_prev.next
-            group_prev.next = kth
-            group_prev = temp
+        l=[None]*(k-1)
+        curr=head
+        res=ListNode()
+        ans=res
+        c=0
+        while curr:
+            c+=1
+            if c%k==0:
+                ans.next=curr
+                curr=curr.next
+                ans=ans.next
+                t=k-2
+                while t>=0:
+                    ans.next=l[t]
+                    ans=ans.next
+                    t-=1
+                ans.next=curr
+                l=[None]*(k-1)
+            else:
+                l[(c%k)-1]=curr
+                curr=curr.next
+        return res.next
