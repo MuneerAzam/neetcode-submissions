@@ -10,9 +10,7 @@ class Solution:
         def trav(node):
             if not node:
                 return
-            t=node.left
-            node.left=node.right
-            node.right=t
+            node.left,node.right=node.right,node.left
             trav(node.left)
             trav(node.right)
         trav(root)
