@@ -4,24 +4,17 @@
 #         self.val = val
 #         self.left = left
 #         self.right = right
-
-from collections import deque
-
+from collections import defaultdict
 class Solution:
     def levelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
-        if not root:
-            return []
-        res = []
-        q = deque([root])
-        while q:
-            level = []
-            for _ in range(len(q)):
-                node = q.popleft()
-                level.append(node.val)
-                if node.left:
-                    q.append(node.left)
-                if node.right:
-                    q.append(node.right)
-            res.append(level)
-        return res
+        self.d=defaultdict(list)
+        def trav(node,level):
+            if not node:
+                return
+            self.d[level].append(node.val)
+            level+=1
+            trav(node.left,level)
+            trav(node.right,level)
+        trav(root,0)
+        return list(self.d.values())
         
